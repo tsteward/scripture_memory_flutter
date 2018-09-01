@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../widgets/verse_list_widget.dart';
 import 'add_verse_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -19,6 +21,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
+      body: VerseListWidget(),
     );
   }
 }
