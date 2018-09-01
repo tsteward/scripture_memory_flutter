@@ -13,8 +13,8 @@ class AddVerseScreenState extends State<AddVerseScreen> {
         title: Text('Add Verse'),
       ),
       body: Container(
-        padding: EdgeInsets.all(8.0),
-        child: ListView(
+        margin: EdgeInsets.all(4.0),
+        child: Column(
           children: [
             TextField(),
             RaisedButton(
