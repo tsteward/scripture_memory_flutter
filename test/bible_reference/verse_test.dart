@@ -163,6 +163,9 @@ void main() {
   });
 
   test('Verse.fromString() constructor fail', () {
+    // empty string
+    expect(() => Verse.fromString(''), throwsArgumentError);
+
     // misspelled
     expect(() => Verse.fromString('Mathew 4:19'), throwsArgumentError);
 
