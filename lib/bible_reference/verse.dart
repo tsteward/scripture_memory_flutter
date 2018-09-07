@@ -111,7 +111,7 @@ class Verse {
     try {
       chapter = int.parse(chapterString);
       verse = int.parse(verseString);
-    } on FormatException catch (e) {
+    } on FormatException {
       throw ArgumentError.value(referenceString);
     }
 
