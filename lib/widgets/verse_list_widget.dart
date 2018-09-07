@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../bible_reference/bible_reference.dart';
 
 class VerseListWidget extends StatelessWidget {
-  VerseListWidget({Key key, this.verses}) : super(key: key);
-
   final List<Verse> verses;
+
+  VerseListWidget({Key key, this.verses}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
