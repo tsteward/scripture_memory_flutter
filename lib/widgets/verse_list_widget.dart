@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'verse_text_widget.dart';
 
 import '../bible_reference/bible_reference.dart';
 
@@ -16,6 +17,7 @@ class VerseListWidget extends StatelessWidget {
         Card(
           child: ListTile(
             title: Text(verse.toString()),
+            subtitle: VerseTextWidget(verse: verse),
           ),
         ),
       );
