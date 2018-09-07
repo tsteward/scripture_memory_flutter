@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
 
+import '../bible_reference/bible_reference.dart';
+
 class AddVerseScreen extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => AddVerseScreenState();
+  State<StatefulWidget> createState() => _AddVerseScreenState();
 }
 
-class AddVerseScreenState extends State<AddVerseScreen> {
+class _AddVerseScreenState extends State<AddVerseScreen> {
+  final verseReferenceController = TextEditingController();
+
+  @override
+  void dispose() {
+    verseReferenceController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,9 +26,17 @@ class AddVerseScreenState extends State<AddVerseScreen> {
         margin: EdgeInsets.all(4.0),
         child: Column(
           children: [
-            TextField(),
+            TextField(
+              controller: verseReferenceController,
+            ),
             RaisedButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () {
+                // only return the reference if the reference is valid
+                if (Verse.checkString(verseReferenceController.text)) {
+                  Navigator.pop<Verse>(
+                      context, Verse.fromString(verseReferenceController.text));
+                }
+              },
               child: Text('Add'),
             ),
           ],
