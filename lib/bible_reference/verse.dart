@@ -8,6 +8,19 @@ class Verse {
   final int chapter;
   final int verse;
 
+  /// Checks that [referenceString] is a valid verse reference.
+  ///
+  /// Returns true if the string is a valid verse reference.
+  static bool checkString(String referenceString) {
+    // TODO actually check instead of using try catch
+    try {
+      new Verse.fromString(referenceString);
+    } on ArgumentError {
+      return false;
+    }
+    return true;
+  }
+
   /// Creates a verse from the given [book], [chapter] and [verse].
   ///
   /// Throws an [ArgumentError] if invalid parameters are given.

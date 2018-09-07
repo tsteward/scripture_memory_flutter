@@ -2,6 +2,11 @@ import 'package:scripture_memory_flutter/bible_reference/bible_reference.dart';
 import 'package:test/test.dart';
 
 void main() {
+  test('Verse.checkString()', () {
+    expect(Verse.checkString('Matthew 18:20'), true);
+    expect(Verse.checkString(''), false);
+  });
+
   test('Verse() constructor', () {
     var verse = Verse(BibleBook.matthew, 18, 20);
     expect(verse.book, BibleBook.matthew);
