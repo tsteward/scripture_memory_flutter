@@ -5,8 +5,9 @@ import '../bible_reference/bible_reference.dart';
 
 class VerseListWidget extends StatelessWidget {
   final List<Verse> verses;
+  final void Function(Verse verse) onRemoveVerse;
 
-  VerseListWidget({Key key, this.verses}) : super(key: key);
+  VerseListWidget({Key key, this.verses, this.onRemoveVerse}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +16,17 @@ class VerseListWidget extends StatelessWidget {
     for (var verse in verses) {
       cards.add(
         Card(
-          child: ListTile(
-            title: Text(verse.toString()),
-            subtitle: VerseTextWidget(verse: verse),
+          child: Column(
+            children: <Widget>[
+              ListTile(
+                title: Text(verse.toString()),
+                subtitle: VerseTextWidget(verse: verse),
+              ),
+              RaisedButton(
+                child: Text('Remove'),
+                onPressed: () => onRemoveVerse(verse),
+              ),
+            ],
           ),
         ),
       );

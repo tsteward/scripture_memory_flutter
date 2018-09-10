@@ -12,6 +12,16 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   var _verses = <Verse>[];
 
+  void onVerseAdd() async {
+    final verse = await Navigator.push<Verse>(
+        context, MaterialPageRoute(builder: (context) => AddVerseScreen()));
+    if (verse != null) {
+      setState(() {
+        _verses.add(verse);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,20 +32,13 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Icon(
               Icons.add,
             ),
-            onPressed: () async {
-              final verse = await Navigator.push<Verse>(context,
-                  MaterialPageRoute(builder: (context) => AddVerseScreen()));
-              if (verse != null) {
-                setState(() {
-                  _verses.add(verse);
-                });
-              }
-            },
-          ),
+            onPressed: onVerseAdd,
+          )
         ],
       ),
       body: VerseListWidget(
         verses: _verses,
+        onRemoveVerse: (verse) => setState(() => _verses.remove(verse)),
       ),
     );
   }
