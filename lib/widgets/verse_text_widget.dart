@@ -16,7 +16,13 @@ class VerseTextWidget extends StatefulWidget {
 
 class _VerseTextWidgetState extends State<VerseTextWidget> {
   String _verseText;
-  bool verseTextFetchStarted = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    fetchVerseText();
+  }
 
   Future fetchVerseText() async {
     var verseText = await fetchVerse(widget.verse);
@@ -27,11 +33,6 @@ class _VerseTextWidgetState extends State<VerseTextWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (!verseTextFetchStarted) {
-      verseTextFetchStarted = true;
-      fetchVerseText();
-    }
-
     String verseText;
     if (_verseText == null) {
       verseText = 'Loading...';
