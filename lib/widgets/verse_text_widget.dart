@@ -1,45 +1,27 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 import '../bible_reference/verse.dart';
 import '../bible_text_fetcher.dart';
 
-class VerseTextWidget extends StatefulWidget {
+class VerseTextWidget extends StatelessWidget {
   final Verse verse;
 
   VerseTextWidget({Key key, this.verse}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _VerseTextWidgetState();
-}
-
-class _VerseTextWidgetState extends State<VerseTextWidget> {
-  String _verseText;
-
-  @override
-  void initState() {
-    super.initState();
-
-    fetchVerseText();
-  }
-
-  Future fetchVerseText() async {
-    var verseText = await fetchVerse(widget.verse);
-    setState(() {
-      _verseText = verseText;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    String verseText;
-    if (_verseText == null) {
-      verseText = 'Loading...';
-    } else {
-      verseText = _verseText;
-    }
-
-    return Text(verseText);
+    return FutureBuilder(
+      future: fetchVerse(verse),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) {
+            return Text("Error!");
+          }
+          return Text(snapshot.data);
+        } else {
+          return Text("Loading...");
+        }
+      },
+    );
   }
 }
