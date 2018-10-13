@@ -27,9 +27,9 @@ A scripture memory app written using Flutter.
 ## ESV API Key
 
 The project uses the [ESV API](https://api.esv.org/) for retrieving verse text.
-An API key is required to use the api. You can get an API key from the [ESV
-API website](https://api.esv.org/account/). You will need to create a new API
-application. Select **Personal Study** for the **Intended Use**.
+An API key is required to use the api. You can get an API key by creating a new
+API application on the [ESV API website](https://api.esv.org/account/). When
+creating the application, select **Personal Study** for the **Intended Use**.
 
 To add your api key the project:
 
@@ -49,4 +49,5 @@ To add your api key the project:
 - [Flutter Documentation](https://flutter.io/docs/)
 - [Flutter Installation Instructions](https://flutter.io/get-started/install/)
 - [Flutter Widget Catalog](https://flutter.io/widgets/)
-- [Awesome Flutter](https://github.com/Solido/awesome-flutter)
+- [Flutter by Google - Youtube Playlist](https://www.youtube.com/playlist?list=PLOU2XLYxmsIJ7dsVN4iRuA7BT8XHzGtCr)
+- [Awesome Flutter - Github Repo](https://github.com/Solido/awesome-flutter)
