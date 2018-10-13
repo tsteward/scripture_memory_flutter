@@ -4,15 +4,23 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'bible_reference/bible_reference.dart';
+import 'secret_loader.dart';
 
 const _urlAuthority = 'api.esv.org';
 const _urlPath = '/v3/passage/text/';
+
+Future<String> apiKey;
 
 // TODO add tests
 // TODO think about how to implement this better
 // TODO validate http response
 // TODO handle http error
 Future<String> fetchVerse(Verse verse) async {
+// TODO figure out how to do this cleaner
+  if (apiKey == null) {
+    apiKey = getSecret("esv_api_key");
+  }
+
   var queryParams = <String, String>{
     'q': verse.toCode().toString(),
     'include-passage-references': 'false',
@@ -35,7 +43,7 @@ Future<String> fetchVerse(Verse verse) async {
   var uri = Uri.https(_urlAuthority, _urlPath, queryParams);
 
   var response = await http.get(uri, headers: {
-    "Authorization": "Token 6d7fdf59b83798808b88bed8ae48523a9c9f9ede"
+    "Authorization": "Token ${await apiKey}"
   });
 
   var decoded = jsonDecode(response.body);
