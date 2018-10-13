@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
+import '../actions.dart';
 import '../bible_reference/bible_reference.dart';
+import '../state.dart';
 
 class AddVerseScreen extends StatefulWidget {
   @override
@@ -8,7 +11,7 @@ class AddVerseScreen extends StatefulWidget {
 }
 
 class _AddVerseScreenState extends State<AddVerseScreen> {
-  final referenceTextEditController = TextEditingController();
+  final _referenceTextEditController = TextEditingController();
 
   // true when the verse reference in the textbox is valid
   bool _validReference = false;
@@ -18,39 +21,24 @@ class _AddVerseScreenState extends State<AddVerseScreen> {
     super.initState();
 
     // listen for edits to reference textbox
-    referenceTextEditController.addListener(_onReferenceTextEdit);
+    _referenceTextEditController.addListener(_onReferenceTextEdit);
   }
 
   @override
   void dispose() {
-    referenceTextEditController.dispose();
+    _referenceTextEditController.dispose();
     super.dispose();
   }
 
   void _onReferenceTextEdit() {
     // when the reference textbox is edited, check that the reference is valid
     setState(() {
-      _validReference = Verse.checkString(referenceTextEditController.text);
+      _validReference = Verse.checkString(_referenceTextEditController.text);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // only enable add button when the reference is valid
-    void Function() addVerseOnPressed;
-    if (_validReference) {
-      addVerseOnPressed = () {
-        // only return the reference if the reference is valid
-        if (Verse.checkString(referenceTextEditController.text)) {
-          Navigator.pop<Verse>(
-              context, Verse.fromString(referenceTextEditController.text));
-        }
-      };
-    } else {
-      // null onPressed will disable the button
-      addVerseOnPressed = null;
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Add Verse'),
@@ -60,11 +48,22 @@ class _AddVerseScreenState extends State<AddVerseScreen> {
         child: Column(
           children: [
             TextField(
-              controller: referenceTextEditController,
+              controller: _referenceTextEditController,
             ),
-            RaisedButton(
-              onPressed: addVerseOnPressed,
-              child: Text('Add'),
+            StoreConnector<AppState, Function()>(
+              converter: (store) => () {
+                    var referenceString = _referenceTextEditController.text;
+                    // only add the verse when the refence is valid
+                    if (Verse.checkString(referenceString)) {
+                      store.dispatch(AddVerseAction(Verse.fromString(referenceString)));
+                      Navigator.pop(context);
+                    }
+                  },
+              builder: (context, callback) => RaisedButton(
+                    // only enable the button when the reference is valid
+                    onPressed: _validReference ? callback : null,
+                    child: Text('Add'),
+                  ),
             ),
           ],
         ),
