@@ -9,7 +9,7 @@ A scripture memory app written using Flutter.
 git clone https://github.com/tsteward/scripture_memory_flutter.git
 ```
 3. Connect a device or start an emulator (see instructions for [Windows](https://flutter.io/setup-windows/#set-up-your-android-device), [macOS](https://flutter.io/setup-macos/#set-up-the-ios-simulator), or [Linux](https://flutter.io/setup-linux/#set-up-your-android-device)).
-4. From the scripture_memory_flutter directory, start the app by running `flutter run`.
+4. From the `scripture_memory_flutter` directory, start the app by running `flutter run`.
 ```
 cd scripture_memory_flutter
 flutter run
