@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import 'reducers.dart';
+import 'redux/actions.dart';
+import 'redux/middleware.dart';
+import 'redux/reducers.dart';
+import 'redux/state.dart';
 import 'screens/home_screen.dart';
-import 'state.dart';
 
 void main() {
-  final store = Store<AppState>(appReducers, initialState: AppState());
+  final store = Store<AppState>(appReducers,
+      middleware: [AppMiddleware()], initialState: AppState());
+
+  store.dispatch(LoadStateAction());
 
   runApp(ScriptureMemoryApp(store));
 }

@@ -136,6 +136,8 @@ class Verse {
     return Verse(book, chapter, verse);
   }
 
+  factory Verse.fromJson(dynamic json) => Verse.fromCode(json);
+
   /// Serialzes the verse to a code.
   ///
   /// See [Verse.fromCode] for detail on how the code is formatted.
@@ -155,6 +157,8 @@ class Verse {
     }
     return '${bibleBookNames[book]} $chapter:$verse';
   }
+
+  dynamic toJson() => toCode();
 
   @override
   int get hashCode => toCode();
