@@ -1,8 +1,11 @@
 import 'dart:math';
 
+import 'package:meta/meta.dart';
+
 import 'bible_books.dart';
 
 /// A single verse made up of a consisting of a book, chapter, and verse
+@immutable
 class Verse {
   final BibleBook book;
   final int chapter;
