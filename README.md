@@ -15,7 +15,7 @@ A scripture memory app written using Flutter.
 
 3. From the `scripture_memory_flutter` directory, make a copy of the file
    `secrets.json.example` with the name `secrets.json`. This file is used to
-   store your ESV API Key ([see below](#esv-api-key))
+   store your ESV API Key ([see below](#esv-api-key)).
 4. Connect a device or start an emulator (see instructions for
    [Windows](https://flutter.io/setup-windows/#set-up-your-android-device),
    [macOS](https://flutter.io/setup-macos/#set-up-the-ios-simulator), or
