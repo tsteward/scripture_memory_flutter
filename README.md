@@ -6,17 +6,21 @@ A scripture memory app written using Flutter.
 
 1. Install flutter following the
    [Flutter installation instructions](https://flutter.io/get-started/install/).
-2. [Clone](https://help.github.com/articles/cloning-a-repository/) this repository.
+2. [Clone](https://help.github.com/articles/cloning-a-repository/) this
+   repository.
 
    ```bash
    git clone https://github.com/tsteward/scripture_memory_flutter.git
    ```
 
-3. Connect a device or start an emulator (see instructions for
+3. From the `scripture_memory_flutter` directory, make a copy of the file
+   `secrets.json.example` with the name `secrets.json`. This file is used to
+   store your ESV API Key ([see below](#esv-api-key))
+4. Connect a device or start an emulator (see instructions for
    [Windows](https://flutter.io/setup-windows/#set-up-your-android-device),
    [macOS](https://flutter.io/setup-macos/#set-up-the-ios-simulator), or
    [Linux](https://flutter.io/setup-linux/#set-up-your-android-device)).
-4. From the `scripture_memory_flutter` directory, start the app by running
+5. From the `scripture_memory_flutter` directory, start the app by running
    `flutter run`.
 
    ```bash
@@ -36,12 +40,12 @@ To add your api key the project:
 1. Open the file `secrets.json`.
 2. Replace the text `ESV API KEY HERE` with your api key.
 
-```diff
-...
--  "esv_api_key": "ESV API KEY HERE"
-+  "esv_api_key": "6d7fdf59b83798808b88bed8ae48523a9c9f9ede"
-...
-```
+   ```diff
+   ...
+   -  "esv_api_key": "ESV API KEY HERE"
+   +  "esv_api_key": "6d7fdf59b83798808b88bed8ae48523a9c9f9ede"
+   ...
+   ```
 
 ## Links with information about Flutter
 
