@@ -9,7 +9,6 @@ import 'bible_reference/bible_reference.dart';
 
 // TODO is there a race condition here?
 Future writeVerses(List<Verse> verses) async {
-  print('writing $verses');
   final prefs = await SharedPreferences.getInstance();
   prefs.setString('verses', jsonEncode(verses));
 }
@@ -17,7 +16,6 @@ Future writeVerses(List<Verse> verses) async {
 Future<List<Verse>> readVerses() async {
   final prefs = await SharedPreferences.getInstance();
   var verses = _decodeVerses(prefs.getString('verses'));
-  print('read $verses');
   return verses;
 }
 

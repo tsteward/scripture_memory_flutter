@@ -12,14 +12,12 @@ final appReducers = combineReducers<AppState>([
 ]);
 
 AppState _loadState(AppState state, LoadedStateAction action) {
-      print("state loadied ${action.verses}");
   return AppState()
     ..stateLoaded = true
     ..verses = action.verses;
 }
 
 AppState _addVerse(AppState state, AddVerseAction action) {
-      print("adding verse ${action.verse}");
   if (state.stateLoaded == false) {
     return state;
   }
@@ -31,7 +29,6 @@ AppState _addVerse(AppState state, AddVerseAction action) {
 }
 
 AppState _removeVerse(AppState state, RemoveVerseAction action) {
-      print("removings verse ${action.verse}");
   if (state.stateLoaded == false) {
     return state;
   }
