@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../bible_reference/bible_reference.dart';
-
 class AddVerseScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _AddVerseScreenState();
@@ -30,7 +28,7 @@ class _AddVerseScreenState extends State<AddVerseScreen> {
   void _onReferenceTextEdit() {
     // when the reference textbox is edited, check that the reference is valid
     setState(() {
-      _validReference = Verse.checkString(referenceTextEditController.text);
+      _validReference = referenceTextEditController.text.isNotEmpty;
     });
   }
 
@@ -40,11 +38,7 @@ class _AddVerseScreenState extends State<AddVerseScreen> {
     void Function() addVerseOnPressed;
     if (_validReference) {
       addVerseOnPressed = () {
-        // only return the reference if the reference is valid
-        if (Verse.checkString(referenceTextEditController.text)) {
-          Navigator.pop<Verse>(
-              context, Verse.fromString(referenceTextEditController.text));
-        }
+        Navigator.pop<String>(context, referenceTextEditController.text);
       };
     } else {
       // null onPressed will disable the button

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../bible_reference/bible_reference.dart';
 import '../widgets/verse_list_widget.dart';
 import 'add_verse_screen.dart';
 
@@ -10,10 +9,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var _verses = <Verse>[];
+  var _verses = <String>[];
 
   void onVerseAdd() async {
-    final verse = await Navigator.push<Verse>(
+    final verse = await Navigator.push<String>(
         context, MaterialPageRoute(builder: (context) => AddVerseScreen()));
     if (verse != null) {
       setState(() {

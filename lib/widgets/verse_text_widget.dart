@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../bible_reference/verse.dart';
 import '../bible_text_fetcher.dart';
 
 class VerseTextWidget extends StatelessWidget {
-  final Verse verse;
+  final String verse;
 
   VerseTextWidget({Key key, this.verse}) : super(key: key);
 

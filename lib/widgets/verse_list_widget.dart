@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'verse_text_widget.dart';
 
-import '../bible_reference/bible_reference.dart';
-
 class VerseListWidget extends StatelessWidget {
-  final List<Verse> verses;
-  final void Function(Verse verse) onRemoveVerse;
+  final List<String> verses;
+  final void Function(String verse) onRemoveVerse;
 
   VerseListWidget({Key key, this.verses, this.onRemoveVerse}) : super(key: key);
 
