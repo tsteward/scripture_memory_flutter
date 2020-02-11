@@ -12,9 +12,9 @@ void main() {
   final store = Store<AppState>(appReducers,
       middleware: [AppMiddleware()], initialState: AppState());
 
-  store.dispatch(LoadStateAction());
-
   runApp(ScriptureMemoryApp(store));
+
+  store.dispatch(LoadStateAction());
 }
 
 class ScriptureMemoryApp extends StatelessWidget {
