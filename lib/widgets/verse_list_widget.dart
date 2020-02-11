@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
+import '../actions.dart';
 import '../bible_reference/bible_reference.dart';
-import '../redux/actions.dart';
-import '../redux/state.dart';
+import '../state.dart';
 import 'verse_text_widget.dart';
 
 class VerseListWidget extends StatelessWidget {
