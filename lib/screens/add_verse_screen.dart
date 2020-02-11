@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../model/memory.dart';
+
 class AddVerseScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _AddVerseScreenState();
@@ -38,7 +40,7 @@ class _AddVerseScreenState extends State<AddVerseScreen> {
     void Function() addVerseOnPressed;
     if (_validReference) {
       addVerseOnPressed = () {
-        Navigator.pop<String>(context, referenceTextEditController.text);
+        Navigator.pop<Memory>(context, Memory(verse: referenceTextEditController.text));
       };
     } else {
       // null onPressed will disable the button

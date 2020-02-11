@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 
 import '../bible_text_fetcher.dart';
+import '../model/memory.dart';
 
-class VerseTextWidget extends StatelessWidget {
-  final String verse;
+class MemoryTextWidget extends StatelessWidget {
+  final Memory memory;
 
-  VerseTextWidget({Key key, this.verse}) : super(key: key);
+  MemoryTextWidget({Key key, this.memory}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: fetchVerse(verse),
+      future: fetchVerse(memory.verse),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {

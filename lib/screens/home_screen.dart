@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/verse_list_widget.dart';
+import '../model/memory.dart';
+import '../widgets/memory_list_widget.dart';
 import 'add_verse_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -9,14 +10,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var _verses = <String>[];
+  var _memories = <Memory>[];
 
-  void onVerseAdd() async {
-    final verse = await Navigator.push<String>(
+  void onMemoryAdd() async {
+    final memory = await Navigator.push<Memory>(
         context, MaterialPageRoute(builder: (context) => AddVerseScreen()));
-    if (verse != null) {
+    if (memory != null) {
       setState(() {
-        _verses.add(verse);
+        _memories.add(memory);
       });
     }
   }
@@ -31,13 +32,13 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Icon(
               Icons.add,
             ),
-            onPressed: onVerseAdd,
+            onPressed: onMemoryAdd,
           )
         ],
       ),
-      body: VerseListWidget(
-        verses: _verses,
-        onRemoveVerse: (verse) => setState(() => _verses.remove(verse)),
+      body: MemoryListWidget(
+        memories: _memories,
+        onRemoveMemory: (memory) => setState(() => _memories.remove(memory)),
       ),
     );
   }
