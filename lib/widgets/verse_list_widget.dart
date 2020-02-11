@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-
-import '../actions.dart';
-import '../bible_reference/bible_reference.dart';
-import '../state.dart';
 import 'verse_text_widget.dart';
+
+import '../bible_reference/bible_reference.dart';
 
 class VerseListWidget extends StatelessWidget {
   final List<Verse> verses;
+  final void Function(Verse verse) onRemoveVerse;
 
-  VerseListWidget({Key key, this.verses}) : super(key: key);
+  VerseListWidget({Key key, this.verses, this.onRemoveVerse}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +22,9 @@ class VerseListWidget extends StatelessWidget {
                 title: Text(verse.toString()),
                 subtitle: VerseTextWidget(verse: verse),
               ),
-              StoreConnector<AppState, Function(Verse verse)>(
-                converter: (store) =>
-                    (verse) => store.dispatch(RemoveVerseAction(verse)),
-                builder: (context, callback) => RaisedButton(
-                      child: Text('Remove'),
-                      onPressed: () => callback(verse),
-                    ),
+              RaisedButton(
+                child: Text('Remove'),
+                onPressed: () => onRemoveVerse(verse),
               ),
             ],
           ),
