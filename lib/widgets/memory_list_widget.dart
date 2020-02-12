@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../model/memory.dart';
-import 'memory_text_widget.dart';
 
 class MemoryListWidget extends StatelessWidget {
   final List<Memory> memories;
@@ -20,7 +19,7 @@ class MemoryListWidget extends StatelessWidget {
             children: <Widget>[
               ListTile(
                 title: Text(memory.verse),
-                subtitle: MemoryTextWidget(memory: memory),
+                subtitle: Text(memory.verseText),
               ),
               RaisedButton(
                 child: Text('Remove'),

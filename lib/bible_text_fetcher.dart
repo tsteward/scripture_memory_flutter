@@ -47,5 +47,10 @@ Future<String> fetchVerse(String verse) async {
 
   var decoded = jsonDecode(response.body);
 
-  return decoded['passages'][0];
+  if (decoded.containsKey('passages') && decoded['passages'].isNotEmpty) {
+    return decoded['passages'][0];
+  } else {
+    // TODO better handling
+    return 'lookup error';
+  }
 }

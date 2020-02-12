@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../bible_text_fetcher.dart';
 import '../model/memory.dart';
 
 class AddVerseScreen extends StatefulWidget {
@@ -8,29 +9,29 @@ class AddVerseScreen extends StatefulWidget {
 }
 
 class _AddVerseScreenState extends State<AddVerseScreen> {
-  final referenceTextEditController = TextEditingController();
+  final _referenceTextEditController = TextEditingController();
 
-  // true when the verse reference in the textbox is valid
-  bool _validReference = false;
+  bool _textboxEmpty = true;
+  bool _loadingVerseText = false;
 
   @override
   void initState() {
     super.initState();
 
     // listen for edits to reference textbox
-    referenceTextEditController.addListener(_onReferenceTextEdit);
+    _referenceTextEditController.addListener(_onReferenceTextEdit);
   }
 
   @override
   void dispose() {
-    referenceTextEditController.dispose();
+    _referenceTextEditController.dispose();
     super.dispose();
   }
 
   void _onReferenceTextEdit() {
     // when the reference textbox is edited, check that the reference is valid
     setState(() {
-      _validReference = referenceTextEditController.text.isNotEmpty;
+      _textboxEmpty = _referenceTextEditController.text.isEmpty;
     });
   }
 
@@ -38,13 +39,20 @@ class _AddVerseScreenState extends State<AddVerseScreen> {
   Widget build(BuildContext context) {
     // only enable add button when the reference is valid
     void Function() addVerseOnPressed;
-    if (_validReference) {
-      addVerseOnPressed = () {
-        Navigator.pop<Memory>(context, Memory(verse: referenceTextEditController.text));
-      };
-    } else {
+    if (_textboxEmpty && !_loadingVerseText) {
       // null onPressed will disable the button
       addVerseOnPressed = null;
+    } else {
+      addVerseOnPressed = () async {
+        setState(() {
+          _loadingVerseText = true;
+        });
+
+        var verse = _referenceTextEditController.text;
+        var verseText = await fetchVerse(verse);
+
+        Navigator.pop<Memory>(context, Memory(verse: verse, verseText: verseText));
+      };
     }
 
     return Scaffold(
@@ -56,11 +64,11 @@ class _AddVerseScreenState extends State<AddVerseScreen> {
         child: Column(
           children: [
             TextField(
-              controller: referenceTextEditController,
+              controller: _referenceTextEditController,
             ),
             RaisedButton(
               onPressed: addVerseOnPressed,
-              child: Text('Add'),
+              child: Text(_loadingVerseText ? 'Loading...' : 'Add'),
             ),
           ],
         ),
