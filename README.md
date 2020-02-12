@@ -20,7 +20,13 @@ A scripture memory app written using Flutter.
    [Windows](https://flutter.io/setup-windows/#set-up-your-android-device),
    [macOS](https://flutter.io/setup-macos/#set-up-the-ios-simulator), or
    [Linux](https://flutter.io/setup-linux/#set-up-your-android-device)).
-5. From the `scripture_memory_flutter` directory, start the app by running
+5. [Build generated code](https://dart.dev/tools/build_runner#using-built-in-commands).
+
+   ```bash
+   flutter pub run build_runner build
+   ```
+
+6. From the `scripture_memory_flutter` directory, start the app by running
    `flutter run`.
 
    ```bash
