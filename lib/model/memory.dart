@@ -28,8 +28,9 @@ class Memory {
   Map<String, dynamic> toJson() => _$MemoryToJson(this);
 
   @override
-  int get hashCode => hash2(verse, verseText);
+  int get hashCode => hash3(id, verse, verseText);
 
   @override
-  operator ==(o) => o is Memory && o.verse == verse && o.verseText == verseText;
+  operator ==(o) =>
+      o is Memory && o.id == id && o.verse == verse && o.verseText == verseText;
 }
