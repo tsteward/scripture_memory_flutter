@@ -4,7 +4,7 @@ import '../model/memory.dart';
 
 class MemoryListWidget extends StatelessWidget {
   final List<Memory> memories;
-  final void Function(Memory verse) onRemoveMemory;
+  final void Function(String) onRemoveMemory;
 
   MemoryListWidget({Key key, this.memories, this.onRemoveMemory}) : super(key: key);
 
@@ -23,7 +23,7 @@ class MemoryListWidget extends StatelessWidget {
               ),
               RaisedButton(
                 child: Text('Remove'),
-                onPressed: () => onRemoveMemory(memory),
+                onPressed: () => onRemoveMemory(memory.id),
               ),
             ],
           ),

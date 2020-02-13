@@ -38,7 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: MemoryListWidget(
         memories: _memories,
-        onRemoveMemory: (memory) => setState(() => _memories.remove(memory)),
+        onRemoveMemory: (memoryId) => setState(
+            () => _memories.removeWhere((memory) => memory.id == memoryId)),
       ),
     );
   }
