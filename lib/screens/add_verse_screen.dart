@@ -35,25 +35,22 @@ class _AddVerseScreenState extends State<AddVerseScreen> {
     });
   }
 
+  void _onSubmitted([String verse]) async {
+    setState(() {
+      _loadingVerseText = true;
+    });
+
+    verse = verse ?? _referenceTextEditController.text;
+    var verseText = await fetchVerse(verse);
+
+    Navigator.pop<Memory>(context, Memory(verse: verse, verseText: verseText));
+  }
+
   @override
   Widget build(BuildContext context) {
-    // only enable add button when the reference is valid
-    void Function() addVerseOnPressed;
-    if (_textboxEmpty && !_loadingVerseText) {
-      // null onPressed will disable the button
-      addVerseOnPressed = null;
-    } else {
-      addVerseOnPressed = () async {
-        setState(() {
-          _loadingVerseText = true;
-        });
-
-        var verse = _referenceTextEditController.text;
-        var verseText = await fetchVerse(verse);
-
-        Navigator.pop<Memory>(context, Memory(verse: verse, verseText: verseText));
-      };
-    }
+    // only enable add button when the reference is valid and not
+    // loading
+    var submitEnabled = !_textboxEmpty || _loadingVerseText;
 
     return Scaffold(
       appBar: AppBar(
@@ -65,9 +62,10 @@ class _AddVerseScreenState extends State<AddVerseScreen> {
           children: [
             TextField(
               controller: _referenceTextEditController,
+              onSubmitted: submitEnabled ? _onSubmitted : null,
             ),
             RaisedButton(
-              onPressed: addVerseOnPressed,
+              onPressed: submitEnabled ? _onSubmitted : null,
               child: Text(_loadingVerseText ? 'Loading...' : 'Add'),
             ),
           ],
