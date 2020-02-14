@@ -8,7 +8,7 @@ import 'model/app_data.dart';
 Future<File> _file;
 
 /// Writes the [data] to persistent storage
-void writeAppData(AppData data) async {
+Future writeAppData(AppData data) async {
   var file = await _getFile();
   var encoded = jsonEncode(data);
   await file.writeAsString(encoded);
@@ -17,6 +17,10 @@ void writeAppData(AppData data) async {
 /// Returns the data read from persistent storage
 Future<AppData> readAppData() async {
   var file = await _getFile();
+  if (!(await file.exists())) {
+    return AppData.empty();
+  }
+
   var encoded = await file.readAsString();
   var decoded = jsonDecode(encoded);
   return AppData.fromJson(decoded);
@@ -32,5 +36,5 @@ Future<File> _getFile() async {
 
 Future<File> _loadFile() async {
   final directory = await getApplicationDocumentsDirectory();
-  return File('$directory/app_data.json');
+  return File('${directory.path}/app_data.json');
 }

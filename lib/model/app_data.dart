@@ -14,6 +14,8 @@ class AppData {
 
   AppData({this.memories});
 
+  AppData.empty() : memories = <Memory>[];
+
   factory AppData.fromJson(Map<String, dynamic> json) =>
       _$AppDataFromJson(json);
 

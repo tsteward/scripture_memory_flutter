@@ -4,21 +4,18 @@ import '../model/memory.dart';
 import '../widgets/memory_list_widget.dart';
 import 'add_verse_screen.dart';
 
-class HomeScreen extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _HomeScreenState();
-}
+class HomeScreen extends StatelessWidget {
+  final List<Memory> memories;
+  final void Function(Memory) onAddMemory;
+  final void Function(String) onRemoveMemory;
 
-class _HomeScreenState extends State<HomeScreen> {
-  var _memories = <Memory>[];
+  HomeScreen({this.memories, this.onAddMemory, this.onRemoveMemory});
 
-  void onMemoryAdd() async {
+  void onMemoryAdd(BuildContext context) async {
     final memory = await Navigator.push<Memory>(
         context, MaterialPageRoute(builder: (context) => AddVerseScreen()));
     if (memory != null) {
-      setState(() {
-        _memories.add(memory);
-      });
+      onAddMemory(memory);
     }
   }
 
@@ -32,14 +29,13 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Icon(
               Icons.add,
             ),
-            onPressed: onMemoryAdd,
+            onPressed: () => onMemoryAdd(context),
           )
         ],
       ),
       body: MemoryListWidget(
-        memories: _memories,
-        onRemoveMemory: (memoryId) => setState(
-            () => _memories.removeWhere((memory) => memory.id == memoryId)),
+        memories: memories,
+        onRemoveMemory: onRemoveMemory,
       ),
     );
   }
