@@ -1,56 +1,45 @@
 import 'dart:async';
-import 'dart:convert';
 
-import 'package:http/http.dart' as http;
+import 'package:esv_api/esv_api.dart';
 
 import 'secret_loader.dart';
 
-const _urlAuthority = 'api.esv.org';
-const _urlPath = '/v3/passage/text/';
+Future<ESVAPI> esvApi;
 
-Future<String> apiKey;
-
-// TODO add tests
-// TODO think about how to implement this better
-// TODO validate http response
-// TODO handle http error
+/// Returns the text of the verse. If there is an error, returns null
 Future<String> fetchVerse(String verse) async {
 // TODO figure out how to do this cleaner
-  if (apiKey == null) {
-    apiKey = getSecret("esv_api_key");
+  if (esvApi == null) {
+    esvApi = _loadApi();
   }
 
-  var queryParams = <String, String>{
-    'q': verse,
-    'include-passage-references': 'false',
-    'include-first-verse-numbers': 'false',
-    'include-verse-numbers': 'false',
-    'include-footnotes': 'false',
-    'include-footnote-body': 'false',
-    // TODO 'include-short-copyright': 'false',
-    'include-passage-horizontal-lines': 'false',
-    'include-heading-horizontal-lines': 'false',
-    'include-headings': 'false',
-    'include-selahs': 'false',
-    'indent-paragraphs': '0',
-    'indent-poetry': 'false',
-    'indent-poetry-lines': '0',
-    'indent-declares': '0',
-    'indent-psalm-doxology': '0',
-  };
+  var response = await (await esvApi).getPassageText(
+    verse,
+    include_passage_references: false,
+    include_verse_numbers: false,
+    include_first_verse_numbers: false,
+    include_footnotes: false,
+    include_footnote_body: false,
+    include_short_copyright: true,
+    include_passage_horizontal_lines: false,
+    include_heading_horizontal_lines: false,
+    include_headings: false,
+    include_selahs: false,
+    indent_paragraphs: 0,
+    indent_poetry: false,
+    indent_poetry_lines: 0,
+    indent_declares: 0,
+    indent_psalm_doxology: 0,
+  );
 
-  var uri = Uri.https(_urlAuthority, _urlPath, queryParams);
-
-  var response = await http.get(uri, headers: {
-    "Authorization": "Token ${await apiKey}"
-  });
-
-  var decoded = jsonDecode(response.body);
-
-  if (decoded.containsKey('passages') && decoded['passages'].isNotEmpty) {
-    return decoded['passages'][0];
-  } else {
-    // TODO better handling
-    return 'lookup error';
+  if (response.passages != null && response.passages.isNotEmpty) {
+    return response.passages[0];
   }
+
+  return null;
+}
+
+Future<ESVAPI> _loadApi() async {
+  var apiKey = await getSecret("esv_api_key");
+  return ESVAPI(apiKey);
 }

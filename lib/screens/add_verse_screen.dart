@@ -35,7 +35,7 @@ class _AddVerseScreenState extends State<AddVerseScreen> {
     });
   }
 
-  void _onSubmitted([String verse]) async {
+  void _onSubmitted(BuildContext context, [String verse]) async {
     setState(() {
       _loadingVerseText = true;
     });
@@ -43,7 +43,28 @@ class _AddVerseScreenState extends State<AddVerseScreen> {
     verse = verse ?? _referenceTextEditController.text;
     var verseText = await fetchVerse(verse);
 
-    Navigator.pop<Memory>(context, Memory(verse: verse, verseText: verseText));
+    if (verseText != null) {
+      Navigator.pop<Memory>(
+          context, Memory(verse: verse, verseText: verseText));
+    } else {
+      setState(() {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Error'),
+                content: Text('You did a bad.'),
+                actions: <Widget>[
+                  FlatButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text('Ok'),
+                  ),
+                ],
+              );
+            });
+        _loadingVerseText = false;
+      });
+    }
   }
 
   @override
@@ -62,10 +83,12 @@ class _AddVerseScreenState extends State<AddVerseScreen> {
           children: [
             TextField(
               controller: _referenceTextEditController,
-              onSubmitted: submitEnabled ? _onSubmitted : null,
+              onSubmitted: submitEnabled
+                  ? (verse) => _onSubmitted(context, verse)
+                  : null,
             ),
             RaisedButton(
-              onPressed: submitEnabled ? _onSubmitted : null,
+              onPressed: submitEnabled ? () => _onSubmitted(context) : null,
               child: Text(_loadingVerseText ? 'Loading...' : 'Add'),
             ),
           ],

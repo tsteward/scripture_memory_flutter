@@ -17,6 +17,7 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  esv_api: ^0.1.3
   flutter:
     sdk: flutter
   http: ^0.12.0+4
