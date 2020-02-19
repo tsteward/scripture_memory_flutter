@@ -43,6 +43,7 @@ class _AddVerseScreenState extends State<AddVerseScreen> {
     verse = verse ?? _referenceTextEditController.text;
     var verseText = await fetchVerse(verse);
 
+    // TODO handle case where screen is deactivated while adding verse
     if (verseText != null) {
       Navigator.pop<Memory>(
           context, Memory(verse: verse, verseText: verseText));
@@ -52,8 +53,8 @@ class _AddVerseScreenState extends State<AddVerseScreen> {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: Text('Error'),
-                content: Text('You did a bad.'),
+                title: Text('Couldn\'t retrieve the verse.'),
+                content: Text('Check that the reference is correct and try again later.'),
                 actions: <Widget>[
                   FlatButton(
                     onPressed: () => Navigator.pop(context),

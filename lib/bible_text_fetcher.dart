@@ -13,24 +13,31 @@ Future<String> fetchVerse(String verse) async {
     esvApi = _loadApi();
   }
 
-  var response = await (await esvApi).getPassageText(
-    verse,
-    include_passage_references: false,
-    include_verse_numbers: false,
-    include_first_verse_numbers: false,
-    include_footnotes: false,
-    include_footnote_body: false,
-    include_short_copyright: true,
-    include_passage_horizontal_lines: false,
-    include_heading_horizontal_lines: false,
-    include_headings: false,
-    include_selahs: false,
-    indent_paragraphs: 0,
-    indent_poetry: false,
-    indent_poetry_lines: 0,
-    indent_declares: 0,
-    indent_psalm_doxology: 0,
-  );
+  PassageTextResponse response;
+
+  /// TODO give more details in error response
+  try {
+    response = await (await esvApi).getPassageText(
+      verse,
+      include_passage_references: false,
+      include_verse_numbers: false,
+      include_first_verse_numbers: false,
+      include_footnotes: false,
+      include_footnote_body: false,
+      include_short_copyright: true,
+      include_passage_horizontal_lines: false,
+      include_heading_horizontal_lines: false,
+      include_headings: false,
+      include_selahs: false,
+      indent_paragraphs: 0,
+      indent_poetry: false,
+      indent_poetry_lines: 0,
+      indent_declares: 0,
+      indent_psalm_doxology: 0,
+    );
+  } catch (e) {
+    return null;
+  }
 
   if (response.passages != null && response.passages.isNotEmpty) {
     return response.passages[0];
